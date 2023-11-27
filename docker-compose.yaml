@@ -1,0 +1,37 @@
+version: '3.4'
+
+x-default-logging: &logging
+  driver: "json-file"
+  options:
+    max-size: "10m"
+    max-file: "5"
+
+networks:
+  subnet_0:
+    driver: bridge
+
+volumes:
+  app-node-modules: {}
+
+secrets: {}
+
+services:
+  countries-app:
+    image: juliocesarmidia/countries-app:latest
+    build:
+      context: .
+    # command: 'sh -c "npm install && npm run dev"'
+    container_name: countries-app
+    hostname: countries-app
+    environment:
+      NODE_ENV: development
+    networks:
+      - subnet_0
+    restart: on-failure
+    ports:
+      - 3030:3030
+    volumes:
+      - ./:/app:rw
+      - app-node-modules:/app/node_modules:rw
+    logging: *logging
+    depends_on: []
