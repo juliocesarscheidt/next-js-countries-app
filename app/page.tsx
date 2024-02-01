@@ -66,13 +66,20 @@ export default async function Home({ searchParams }: { [key: string]: string | s
   return (
     <div>
       <InputFilter />
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 w-full container gap-2 mt-8">
-        {
-          countries.map((country: Country) => (
-            <CountryCard country={country} />
-          ))
-        }
-      </section>
+      { countries.length > 0 && (
+        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 w-full container gap-2 mt-8">
+          {
+            countries.map((country: Country) => (
+              <CountryCard country={country} />
+            ))
+          }
+        </section>
+      )}
+      { countries.length === 0 && (
+        <section className="w-full container mt-8">
+          <h1 className="text-2xl font-bold text-center">Nenhum país encontrado</h1>
+        </section>
+      )}
     </div>
   )
 }
